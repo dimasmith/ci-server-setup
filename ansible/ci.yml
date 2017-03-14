@@ -1,0 +1,5 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: "Check core"
+      shell: echo hello
