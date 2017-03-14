@@ -1,25 +1,8 @@
 - hosts: all
   become: yes
+  roles:
+    - docker
   tasks:
-    - name: "Add docker repository"
-      apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu xenial stable
-        state: present
-    - name: "Install docker repository key"
-      apt_key:
-        id: 0EBFCD88
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-    - name: "Install docker"
-      apt:
-        name: docker-ce
-        update_cache: yes
-        state: present
-    - name: "Install docker-compose"
-      apt:
-        name: docker-compose
-        state: present
-
     - name: "Create CI group"
       group:
         name: ci
@@ -35,8 +18,3 @@
         home: /var/ci
       notify:
         - restart docker
-  handlers:
-    - name: restart docker
-      service:
-        name: docker
-        state: restarted
