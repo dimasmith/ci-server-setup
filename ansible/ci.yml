@@ -15,6 +15,10 @@
         name: docker-ce
         update_cache: yes
         state: present
+    - name: "Install docker-compose"
+      apt:
+        name: docker-compose
+        state: present
 
     - name: "Create CI group"
       group:
