@@ -1,5 +1,38 @@
 - hosts: all
   become: yes
   tasks:
-    - name: "Check core"
-      shell: echo hello
+    - name: "Add docker repository"
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu xenial stable
+        state: present
+    - name: "Install docker repository key"
+      apt_key:
+        id: 0EBFCD88
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: "Install docker"
+      apt:
+        name: docker-ce
+        update_cache: yes
+        state: present
+
+    - name: "Create CI group"
+      group:
+        name: ci
+        state: present
+    - name: "Create CI user"
+      user:
+        name: ci
+        shell: /bin/bash
+        groups: ci,docker
+        group: ci
+        state: present
+        createhome: yes
+        home: /var/ci
+      notify:
+        - restart docker
+  handlers:
+    - name: restart docker
+      service:
+        name: docker
+        state: restarted
