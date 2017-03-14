@@ -1,20 +1,4 @@
 - hosts: all
   become: yes
   roles:
-    - docker
-  tasks:
-    - name: "Create CI group"
-      group:
-        name: ci
-        state: present
-    - name: "Create CI user"
-      user:
-        name: ci
-        shell: /bin/bash
-        groups: ci,docker
-        group: ci
-        state: present
-        createhome: yes
-        home: /var/ci
-      notify:
-        - restart docker
+    - jenkins

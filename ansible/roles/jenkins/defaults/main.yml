@@ -1,0 +1,5 @@
+jenkins:
+  port: 80
+  version: 2.32.3-alpine
+  user:
+    uid: 1040

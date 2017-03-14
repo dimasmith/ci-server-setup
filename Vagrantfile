@@ -12,4 +12,6 @@ Vagrant.configure(2) do |config|
     ansible.playbook = 'ansible/ci.yml'
   end
 
+  config.vm.network :forwarded_port, guest: 80, host: 8888
+
 end

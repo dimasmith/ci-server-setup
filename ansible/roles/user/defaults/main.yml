@@ -1,0 +1,4 @@
+ci:
+  user: ci
+  group: ci
+  home: /var/ci

@@ -1,0 +1,15 @@
+- name: "Create CI group"
+  group:
+    name: "{{ ci.group }}"
+    state: present
+- name: "Create CI user"
+  user:
+    name: "{{ ci.user }}"
+    shell: /bin/bash
+    groups: docker,{{ ci.group }}
+    group: "{{ ci.group }}"
+    state: present
+    createhome: yes
+    home: "{{ ci.home }}"
+  notify:
+    - restart docker
