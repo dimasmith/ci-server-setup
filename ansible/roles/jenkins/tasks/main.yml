@@ -24,3 +24,5 @@
       - "{{ ci.home }}/jenkins:/var/jenkins_home"
     ports:
       - "{{ jenkins.port }}:8080"
+    networks:
+      - name: '{{ ci.docker.network }}'

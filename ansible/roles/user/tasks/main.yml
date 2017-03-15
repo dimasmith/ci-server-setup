@@ -13,3 +13,7 @@
     home: "{{ ci.home }}"
   notify:
     - restart docker
+- name: "Create dedicated network"
+  docker_network:
+    name: '{{ ci.docker.network }}'
+    state: present

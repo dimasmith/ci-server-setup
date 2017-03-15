@@ -24,3 +24,5 @@
       - "{{ ci.home }}/nexus:/nexus-data"
     ports:
       - "{{ nexus.port }}:8081"
+    networks:
+      - name: '{{ ci.docker.network }}'
