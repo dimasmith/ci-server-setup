@@ -26,3 +26,12 @@
       - "{{ nexus.port }}:8081"
     networks:
       - name: '{{ ci.docker.network }}'
+- name: "Create nexus service descriptor"
+  template:
+    src: nexus-ci.service.j2
+    dest: /etc/systemd/system/nexus-ci.service
+- name: "Enable nexus service"
+  service:
+    name: nexus-ci
+    enabled: yes
+    state: started
