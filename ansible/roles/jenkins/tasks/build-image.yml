@@ -8,6 +8,6 @@
     dest: "/tmp/jenkins/docker/Dockerfile"
 - name: "Build  custom jenkins image"
   docker_image:
-    name: jenkins-docker:{{ jenkins.version }}
+    name: "{{ jenkins_image }}:{{ jenkins_version }}"
     path: "/tmp/jenkins/docker"
     state: present

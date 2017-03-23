@@ -1,7 +1,3 @@
-- name: "Show variable"
-  debug:
-    msg: "{{ jenkins_image_build }}"
-
 # Build custom jenkins image
 - include: build-image.yml
   when: jenkins_image_build
@@ -9,12 +5,12 @@
 - name: "Start jenkins container"
   docker_container:
     name: jenkins
-    image: jenkins-docker:{{ jenkins.version }}
+    image: "{{ jenkins_image }}:{{ jenkins_version }}"
     volumes:
       - "jenkins_home:/var/jenkins_home"
       - "/var/run/docker.sock:/var/run/docker.sock"
     ports:
-      - "{{ jenkins.port }}:8080"
+      - "{{ jenkins_port }}:8080"
     networks:
       - name: '{{ ci.docker.network }}'
 - name: "Create jenkins service descriptor"
