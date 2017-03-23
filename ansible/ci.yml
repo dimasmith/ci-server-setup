@@ -1,7 +1,5 @@
 - hosts: all
   become: yes
   roles:
-  #  You may disable building custom image by setting jenkins_image_build and jenkins_image variables
-    # - { role: jenkins, jenkins_image_build: false }
     - jenkins
     - nexus
