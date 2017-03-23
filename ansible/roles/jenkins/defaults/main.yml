@@ -1,3 +1,6 @@
 jenkins:
   port: 80
   version: 2.32.3
+  image:
+    build: true
+jenkins_image_build: true

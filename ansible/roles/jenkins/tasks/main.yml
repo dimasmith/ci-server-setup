@@ -1,16 +1,11 @@
-- name: "Create dir for jenkins image build"
-  file:
-    path: "{{ ci.home }}/jenkins/docker"
-    state: directory
-- name: "Prepare jenkins docker file"
-  template:
-    src: Dockerfile.j2
-    dest: "{{ ci.home }}/jenkins/docker/Dockerfile"
-- name: "Build  custom jenkins image"
-  docker_image:
-    name: jenkins-docker:{{ jenkins.version }}
-    path: "{{ ci.home }}/jenkins/docker"
-    state: present
+- name: "Show variable"
+  debug:
+    msg: "{{ jenkins_image_build }}"
+
+# Build custom jenkins image
+- include: build-image.yml
+  when: jenkins_image_build
+
 - name: "Start jenkins container"
   docker_container:
     name: jenkins
