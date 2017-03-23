@@ -1,15 +1,15 @@
 - name: "Pull nexus container"
   docker_image:
-    name: sonatype/nexus3:{{ nexus.version }}
+    name: sonatype/nexus3:{{ nexus_version }}
     state: present
 - name: "Start nexus container"
   docker_container:
     name: nexus
-    image: sonatype/nexus3:{{ nexus.version }}
+    image: sonatype/nexus3:{{ nexus_version }}
     volumes:
       - "nexus-data:/nexus-data"
     ports:
-      - "{{ nexus.port }}:8081"
+      - "{{ nexus_port }}:8081"
     networks:
       - name: "{{ ci_docker_network }}"
 - name: "Create nexus service descriptor"
