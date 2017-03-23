@@ -1,29 +1,16 @@
-- name: "Pull jenkins container"
-  docker_image:
-    name: jenkins:2.32.3-alpine
-    state: present
-- name: "Create jenkins user"
-  user:
-    name: jenkins
-    group: "{{ ci.group }}"
-    uid: '{{ jenkins.user.uid }}'
-    state: present
-    createhome: no
-- name: "Create volume directory"
-  file:
-    path: '{{ ci.home }}/jenkins'
-    owner: jenkins
-    group: '{{ ci.group }}'
-    state: directory
+# Build custom jenkins image
+- include: build-image.yml
+  when: jenkins_image_build
+
 - name: "Start jenkins container"
   docker_container:
     name: jenkins
-    image: jenkins:{{ jenkins.version }}
-    user: '{{ jenkins.user.uid }}'
+    image: "{{ jenkins_image }}:{{ jenkins_version }}"
     volumes:
-      - "{{ ci.home }}/jenkins:/var/jenkins_home"
+      - "jenkins_home:/var/jenkins_home"
+      - "/var/run/docker.sock:/var/run/docker.sock"
     ports:
-      - "{{ jenkins.port }}:8080"
+      - "{{ jenkins_port }}:8080"
     networks:
       - name: '{{ ci.docker.network }}'
 - name: "Create jenkins service descriptor"

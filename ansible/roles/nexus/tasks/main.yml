@@ -2,26 +2,12 @@
   docker_image:
     name: sonatype/nexus3:{{ nexus.version }}
     state: present
-- name: "Create nexus user"
-  user:
-    name: nexus
-    group: "{{ ci.group }}"
-    uid: '{{ nexus.user.uid }}'
-    state: present
-    createhome: no
-- name: "Create volume directory"
-  file:
-    path: '{{ ci.home }}/nexus'
-    owner: nexus
-    group: '{{ ci.group }}'
-    state: directory
 - name: "Start nexus container"
   docker_container:
     name: nexus
     image: sonatype/nexus3:{{ nexus.version }}
-    user: '{{ nexus.user.uid }}'
     volumes:
-      - "{{ ci.home }}/nexus:/nexus-data"
+      - "nexus-data:/nexus-data"
     ports:
       - "{{ nexus.port }}:8081"
     networks:

@@ -1,0 +1,13 @@
+- name: "Create dir for jenkins image build"
+  file:
+    path: "/tmp/jenkins/docker"
+    state: directory
+- name: "Prepare jenkins docker file"
+  template:
+    src: Dockerfile.j2
+    dest: "/tmp/jenkins/docker/Dockerfile"
+- name: "Build  custom jenkins image"
+  docker_image:
+    name: "{{ jenkins_image }}:{{ jenkins_version }}"
+    path: "/tmp/jenkins/docker"
+    state: present

@@ -1,5 +1,4 @@
-jenkins:
-  port: 80
-  version: 2.32.3-alpine
-  user:
-    uid: 1040
+jenkins_port: 80
+jenkins_version: 2.32.3
+jenkins_image_build: true
+jenkins_image: jenkins-docker
