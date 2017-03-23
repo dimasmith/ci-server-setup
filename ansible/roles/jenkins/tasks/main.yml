@@ -12,7 +12,7 @@
     ports:
       - "{{ jenkins_port }}:8080"
     networks:
-      - name: '{{ ci.docker.network }}'
+      - name: "{{ ci_docker_network }}"
 - name: "Create jenkins service descriptor"
   template:
     src: jenkins-ci.service.j2

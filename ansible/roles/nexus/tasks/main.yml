@@ -11,7 +11,7 @@
     ports:
       - "{{ nexus.port }}:8081"
     networks:
-      - name: '{{ ci.docker.network }}'
+      - name: "{{ ci_docker_network }}"
 - name: "Create nexus service descriptor"
   template:
     src: nexus-ci.service.j2

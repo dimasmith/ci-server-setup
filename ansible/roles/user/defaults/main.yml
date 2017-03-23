@@ -1,6 +1,4 @@
-ci:
-  user: ci
-  group: ci
-  home: /var/ci
-  docker:
-    network: ci_network
+ci_user: ci
+ci_group: ci
+ci_home: /var/ci
+ci_docker_network: ci_network

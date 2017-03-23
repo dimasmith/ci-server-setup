@@ -1,19 +1,19 @@
 - name: "Create CI group"
   group:
-    name: "{{ ci.group }}"
+    name: "{{ ci_group }}"
     state: present
 - name: "Create CI user"
   user:
-    name: "{{ ci.user }}"
+    name: "{{ ci_user }}"
     shell: /bin/bash
-    groups: docker,{{ ci.group }}
-    group: "{{ ci.group }}"
+    groups: docker,{{ ci_group }}
+    group: "{{ ci_group }}"
     state: present
     createhome: yes
-    home: "{{ ci.home }}"
+    home: "{{ ci_home }}"
   notify:
     - restart docker
 - name: "Create dedicated network"
   docker_network:
-    name: '{{ ci.docker.network }}'
+    name: '{{ ci_docker_network }}'
     state: present
