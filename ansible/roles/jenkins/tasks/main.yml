@@ -1,11 +1,20 @@
-- name: "Pull jenkins container"
+- name: "Create dir for jenkins image build"
+  file:
+    path: "{{ ci.home }}/jenkins/docker"
+    state: directory
+- name: "Prepare jenkins docker file"
+  template:
+    src: Dockerfile.j2
+    dest: "{{ ci.home }}/jenkins/docker/Dockerfile"
+- name: "Build  custom jenkins image"
   docker_image:
-    name: dimasmith/jenkins-docker:2.32.3
+    name: jenkins-docker:{{ jenkins.version }}
+    path: "{{ ci.home }}/jenkins/docker"
     state: present
 - name: "Start jenkins container"
   docker_container:
     name: jenkins
-    image: dimasmith/jenkins-docker:2.32.3
+    image: jenkins-docker:{{ jenkins.version }}
     volumes:
       - "jenkins_home:/var/jenkins_home"
       - "/var/run/docker.sock:/var/run/docker.sock"

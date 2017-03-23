@@ -28,7 +28,11 @@ The role works around this issue by creating a user and passing a directory owne
 It also starts the container providing UID of added user.
 You can change UID by setting `jenkins.user.uid` variable.
 
-## Jenkins
-Custom `Dockerfile` for jenkins allows CI server to manipulate docker.
-In addition to the Jenkins itself the docker binary is added to image.
-To use docker on host machine mount `/var/run/docker.sock` as a volume.
+## Jenkins with docker
+An ansible builds custom jenkins image when deploying server.
+This image is capable of interacting with host machine docker daemon.
+
+Jenkins version can be customized by setting `jenkins.version` variable.
+
+Build is based on `alpine` jenkins image. As for now only way to change custom
+image is to edit `Dockerfile` template in jenkins role.
