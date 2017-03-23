@@ -27,3 +27,8 @@ The Jenkins container should be run as `jenkins` user to set up rights.
 The role works around this issue by creating a user and passing a directory ownership to it.
 It also starts the container providing UID of added user.
 You can change UID by setting `jenkins.user.uid` variable.
+
+## Jenkins
+Custom `Dockerfile` for jenkins allows CI server to manipulate docker.
+In addition to the Jenkins itself the docker binary is added to image.
+To use docker on host machine mount `/var/run/docker.sock` as a volume.
