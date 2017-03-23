@@ -1,27 +1,14 @@
 - name: "Pull jenkins container"
   docker_image:
-    name: jenkins:2.32.3-alpine
+    name: dimasmith/jenkins-docker:2.32.3
     state: present
-- name: "Create jenkins user"
-  user:
-    name: jenkins
-    group: "{{ ci.group }}"
-    uid: '{{ jenkins.user.uid }}'
-    state: present
-    createhome: no
-- name: "Create volume directory"
-  file:
-    path: '{{ ci.home }}/jenkins'
-    owner: jenkins
-    group: '{{ ci.group }}'
-    state: directory
 - name: "Start jenkins container"
   docker_container:
     name: jenkins
-    image: jenkins:{{ jenkins.version }}
-    user: '{{ jenkins.user.uid }}'
+    image: dimasmith/jenkins-docker:2.32.3
     volumes:
-      - "{{ ci.home }}/jenkins:/var/jenkins_home"
+      - "jenkins_home:/var/jenkins_home"
+      - "/var/run/docker.sock:/var/run/docker.sock"
     ports:
       - "{{ jenkins.port }}:8080"
     networks:

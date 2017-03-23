@@ -1,5 +1,3 @@
 nexus:
   port: 8081
   version: 3.2.1
-  user:
-    uid: 1050
