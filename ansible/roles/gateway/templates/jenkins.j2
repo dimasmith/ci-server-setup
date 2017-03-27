@@ -1,0 +1,12 @@
+server {
+
+  listen 80;
+  listen [::]:80;
+  server_name {{ jenkins_domain }};
+
+  location / {
+    proxy_pass        http://localhost:{{ jenkins_port }};
+    proxy_redirect    off;
+    proxy_set_header  Host $host;
+  }
+}

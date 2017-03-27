@@ -1,0 +1,13 @@
+- name: "Install jenkins proxy template"
+  template:
+    src: jenkins.j2
+    dest: /etc/nginx/sites-available/jenkins
+- name: "Enable jenkins proxying"
+  file:
+    src: /etc/nginx/sites-available/jenkins
+    dest: /etc/nginx/sites-enabled/jenkins
+    state: link
+- name: "Restart gateway"
+  service:
+    name: nginx
+    state: restarted
