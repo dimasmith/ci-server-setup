@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision :ansible_local do |ansible|
-    ansible.playbook = 'ansible/ci.yml'
+    ansible.playbook = 'ansible/example.yml'
   end
 
   config.vm.network :private_network, ip: "192.168.1.10"
