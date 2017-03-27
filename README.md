@@ -1,48 +1,58 @@
 CI Server
 ========
 
-Automated setup for CI server to use with java projects
+Automated setup for CI server to use with java projects.
 
-## Software that will be set up:
+## Software that can be set up:
 
-* Jenkins
+* [Jenkins](https://jenkins.io/)
+* [Nexus](https://www.sonatype.com/nexus-repository-oss)
+* [Nginx](https://www.nginx.com/resources/wiki/)
 
-## Roles
+## Setting up
 
-The set of reusable ansible roles is combined to set up CI server.
+Software is set up via [Ansible](https://www.ansible.com/).
 
-The playbook install products as Docker containers.
-It creates `ci` user to group all CI related service under the hood.
-Volume directories are available under `ci` user home folder.
+Copy or modify example playbook to set up your server.
+Provide an inventory file for the playbook.
+Provision environment using Ansible.
 
-The playbook uses two common Ansible roles to set up the server.  
-The `docker` role sets up repositories and installs the latest version of the Docker engine and helper scripts.
-The `user` role creates `ci` user.
-It also adds `ci` user to "docker" group so the user can manipulate images and containers.
+### Customization
 
-The `jenkins` role downloads and starts an instance of Jenkins build server.
-Volume data of the server mapped into `jenkins` subdirectory of `ci` user home folder.
-There is a known issue with owning data in the mounted volume.
-The Jenkins container should be run as `jenkins` user to set up rights.
-The role works around this issue by creating a user and passing a directory ownership to it.
-It also starts the container providing UID of added user.
-You can change UID by setting `jenkins.user.uid` variable.
+#### Domains
+Domains are used by gateway to proxy requests to services.
+Variables to set up domains:
+* `jenkins_domain` for jenkins;
+* `nexus_domain` for nexus;
 
-## Jenkins with docker
-An ansible builds custom jenkins image when deploying server.
-This image is capable of interacting with host machine docker daemon.
+#### Service ports
+It is possible to customize network ports for services by setting:
+* `jenins_port` for jenkins;
+* `nexus_port` for nexus;
 
-Jenkins version can be customized by setting `jenkins_version` variable.
+#### Service versions
+Service versions can be changes by setting variables:
+* `jenkins_version`;
+* `nexus_version`;
 
-Build is based on `alpine` jenkins image. As for now only way to change custom
-image is to edit `Dockerfile` template in jenkins role.
-
-It is possible not to build custom image of jenkins when provisioning and use
-own image instead. To do that set `jenkins_image_build` to false and
-`jenkins_image` to desired image. `jenkins_version` must be set to specify tag
-of that image. Say you want to use `simonswine/jenkins-nodejs:latest` image.
-Override your `ci.yml` like that
+Those settings can be customized when including role.
+If, for example, you want to run jenkins on 8888 port on `build.example.com` domain
+create playbook like that:
+```yml
+roles
+  - { role: gateway, jenkins_domain: "build.example.com" }
+  - { role: jenkins, jenkins_port: 8888 }
+  - nexus
 ```
-- roles:
-  - { role: jenkins, jenkins_image_build: false, jenkins_image: "simonswine/jenkins-nodejs", jenkins_version: "latest" }
-```
+
+### Evaluate locally
+
+The Vagrantfile is included to populate your server locally.
+It is advised to evaluate installation using vagrant before provisioning servers.
+
+The `example.yml` playbook populates local environment.
+Vagrant launches machine in private network using `192.168.1.10` address.
+By default gateway is set up to resolve `jenkins.ci` and `nexus.ci` domains
+to respective services.
+
+You may use masqdns to set up local development domain to test installation.
