@@ -3,3 +3,6 @@
 
 - name: "Proxy jenkins"
   include: jenkins.yml
+
+- name: "Proxy nexus"
+  include: nexus.yml
