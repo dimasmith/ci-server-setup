@@ -1,0 +1,13 @@
+- name: "Install nexus proxy template"
+  template:
+    src: nexus.j2
+    dest: /etc/nginx/sites-available/nexus
+- name: "Enable nexus proxying"
+  file:
+    src: /etc/nginx/sites-available/nexus
+    dest: /etc/nginx/sites-enabled/nexus
+    state: link
+- name: "Restart gateway"
+  service:
+    name: nginx
+    state: restarted

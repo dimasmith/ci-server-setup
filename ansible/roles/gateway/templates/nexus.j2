@@ -1,0 +1,12 @@
+server {
+
+  listen 80;
+  listen [::]:80;
+  server_name {{ nexus_domain }};
+
+  location / {
+    proxy_pass        http://localhost:{{ nexus_port }};
+    proxy_redirect    off;
+    proxy_set_header  Host $host;
+  }
+}
