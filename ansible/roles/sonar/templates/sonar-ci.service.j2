@@ -1,0 +1,12 @@
+[Unit]
+Description=SonarQube
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a {{ sonar_container_name }}
+ExecStop=/usr/bin/docker stop -t 2 {{ sonar_container_name }}
+
+[Install]
+WantedBy=default.target
