@@ -1,0 +1,26 @@
+- name: "Pull mysql container"
+  docker_image:
+    name: mysql:{{ mysql_version }}
+    state: present
+- name: "Start mysql container"
+  docker_container:
+    name: "{{ mysql_container_name }}"
+    image: mysql:{{ mysql_version }}
+    networks:
+      - name: "{{ ci_docker_network }}"
+    env:
+      MYSQL_ROOT_PASSWORD: s3cr3t
+      MYSQL_DATABASE: sonar
+      MYSQL_USER: sonar
+      MYSQL_PASSWORD: s3cr3t
+    volumes:
+      - "mysql_data:/var/lib/mysql"
+- name: "Create mysql service descriptor"
+  template:
+    src: mysql-ci.service.j2
+    dest: /etc/systemd/system/mysql-ci.service
+- name: "Enable mysql service"
+  service:
+    name: mysql-ci
+    enabled: yes
+    state: started

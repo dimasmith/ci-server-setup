@@ -1,0 +1,25 @@
+- name: "Pull sonarqube container"
+  docker_image:
+    name: sonarqube:{{ sonar_version }}
+    state: present
+- name: "Start sonar container"
+  docker_container:
+    name: "{{ sonar_container_name }}"
+    image: sonarqube:{{ sonar_version }}
+    ports:
+      - "{{ sonar_port }}:9000"
+    networks:
+      - name: "{{ ci_docker_network }}"
+    env:
+      SONARQUBE_JDBC_USERNAME: sonar
+      SONARQUBE_JDBC_PASSWORD: s3cr3t
+      SONARQUBE_JDBC_URL: "jdbc:mysql://{{ mysql_container_name }}:3306/sonar?useUnicode=true&characterEncoding=utf8"
+- name: "Create sonar service descriptor"
+  template:
+    src: sonar-ci.service.j2
+    dest: /etc/systemd/system/sonar-ci.service
+- name: "Enable sonar service"
+  service:
+    name: sonar-ci
+    enabled: yes
+    state: started

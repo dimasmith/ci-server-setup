@@ -1,0 +1,5 @@
+sonar_port: 9000
+sonar_version: 6.3-alpine
+sonar_container_name: sonar
+mysql_version: 5.7.17
+mysql_container_name: mysql

@@ -3,4 +3,5 @@
   roles:
     - jenkins
     - nexus
+    - sonar
     - gateway

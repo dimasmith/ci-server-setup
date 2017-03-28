@@ -6,3 +6,6 @@
 
 - name: "Proxy nexus"
   include: nexus.yml
+
+- name: "Proxy sonar"
+  include: sonar.yml

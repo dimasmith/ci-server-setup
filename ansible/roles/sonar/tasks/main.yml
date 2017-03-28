@@ -1,0 +1,5 @@
+- name: "Install mysql to handle sonar data"
+  include: mysql.yml
+
+- name: "Install sonar"
+  include: sonar.yml
