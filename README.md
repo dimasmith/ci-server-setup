@@ -8,6 +8,7 @@ Automated setup for CI server to use with java projects.
 * [Jenkins](https://jenkins.io/)
 * [Nexus](https://www.sonatype.com/nexus-repository-oss)
 * [Nginx](https://www.nginx.com/resources/wiki/)
+* [SonarQube](https://www.sonarqube.org/)
 
 ## Setting up
 
@@ -24,16 +25,19 @@ Domains are used by gateway to proxy requests to services.
 Variables to set up domains:
 * `jenkins_domain` for jenkins;
 * `nexus_domain` for nexus;
+* `sonar_domain` for sonar;
 
 #### Service ports
 It is possible to customize network ports for services by setting:
 * `jenins_port` for jenkins;
 * `nexus_port` for nexus;
+* `sonar_port` for sonar;
 
 #### Service versions
 Service versions can be changes by setting variables:
 * `jenkins_version`;
 * `nexus_version`;
+* `sonar_version`;
 
 Those settings can be customized when including role.
 If, for example, you want to run jenkins on 8888 port on `build.example.com` domain
@@ -56,3 +60,8 @@ By default gateway is set up to resolve `jenkins.ci` and `nexus.ci` domains
 to respective services.
 
 You may use masqdns to set up local development domain to test installation.
+
+## Software
+
+### SonarQube
+Sonar is installed together with MySQL database.
