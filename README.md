@@ -59,7 +59,7 @@ Vagrant launches machine in private network using `192.168.1.10` address.
 By default gateway is set up to resolve `jenkins.ci` and `nexus.ci` domains
 to respective services.
 
-You may use masqdns to set up local development domain to test installation.
+You may use dnsmasq to set up local development domain to test installation.
 
 ## Software
 
