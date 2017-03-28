@@ -1,0 +1,11 @@
+- name: "Install sonar proxy template"
+  template:
+    src: sonar.j2
+    dest: /etc/nginx/sites-available/sonar
+  notify: restart nginx
+- name: "Enable sonar proxying"
+  file:
+    src: /etc/nginx/sites-available/sonar
+    dest: /etc/nginx/sites-enabled/sonar
+    state: link
+  notify: restart nginx
